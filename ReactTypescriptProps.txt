@@ -1,0 +1,48 @@
+import "./styles.css";
+import React from "react";
+
+interface Props {
+  saludo?: string;
+  nombre: string;
+  apellidos: string;
+  onResetApellidos: () => void;
+  onSetApellidos: (value: string) => void;
+}
+
+const MuestraNombre: React.FC<Props> = (props) => {
+  const { saludo, nombre, apellidos, onSetApellidos, onResetApellidos } = props;
+  return (
+    <>
+      <h1>{`${saludo} ${nombre}`}</h1>
+      <input
+        value={apellidos}
+        onChange={(e) => onSetApellidos(e.target.value)}
+      />
+      <button onClick={onResetApellidos}>Borrar apellidos</button>
+      <div>{apellidos}</div>
+    </>
+  );
+};
+
+MuestraNombre.defaultProps = {
+  saludo: "Hola, "
+};
+
+export default function App() {
+  const [nombre, setNombre] = React.useState("José");
+  const [apellidos, setApellidos] = React.useState("García Pérez");
+  const handleResetApellidos = () => {
+    setApellidos("");
+  };
+
+  return (
+    <div className="App">
+      <MuestraNombre
+        nombre={nombre}
+        apellidos={apellidos}
+        onResetApellidos={handleResetApellidos}
+        onSetApellidos={setApellidos}
+      />
+    </div>
+  );
+}
